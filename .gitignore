@@ -1,0 +1,4 @@
+current_globalip.txt
+log/*
+parameter.py
+__pycache__/*
