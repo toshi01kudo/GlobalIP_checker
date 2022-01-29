@@ -7,8 +7,8 @@ def main():
     ## Logging 設定
     ##
     # 保存先の有無チェック
-    if not os.path.isdir('./log'):
-        os.makedirs('./log', exist_ok=True)
+    if not os.path.isdir(file_path('./log')):
+        os.makedirs(file_path('./log'), exist_ok=True)
     # logファイル出力
     create_log(file_path('log/log.txt'))
     logging.info('#=== Start program ===#')
@@ -19,7 +19,7 @@ def ipchecker():
     # 現在のGlobal IP 取得
     current_globalip = requests.get('http://checkip.amazonaws.com').text
     # 前回のGlobal IP 取得
-    with open('current_globalip.txt', 'r', encoding="utf-8") as f:
+    with open(file_path('current_globalip.txt'), 'r', encoding="utf-8") as f:
         previous_globalip = f.read()
     # Global IP の変更を確認
     if current_globalip == previous_globalip:
@@ -27,7 +27,7 @@ def ipchecker():
     else:
         logging.info('Global IP is changed.')
         # 新しいGlobal IPへ更新
-        with open('current_globalip.txt', 'w', encoding="utf-8") as f:
+        with open(file_path('current_globalip.txt'), 'w', encoding="utf-8") as f:
             f.write(current_globalip)
         # LINEで通知
         send_text = 'New Global IP:\n'
