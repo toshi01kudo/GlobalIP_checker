@@ -13,3 +13,5 @@ jobs:
           architecture: 'x64'
       - name: Get Python version
         run: python -V
+      - name: Run Python
+        run: python globalip_checker.py
