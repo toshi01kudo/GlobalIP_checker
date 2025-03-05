@@ -1,1 +1,2 @@
-Token_key = "LINE Token ID"
+LINE_CHANNEL_ACCESS_TOKEN="LINE Messaging API channel access token"
+LINE_MESSAGE_API_GROUP_ID="LINE Group ID"

@@ -1,5 +1,6 @@
 import requests, os, sys, logging
 import logging.handlers
+import json
 import parameter
 
 def main():
@@ -33,17 +34,29 @@ def ipchecker():
         send_text = 'New Global IP:\n'
         send_text = send_text + current_globalip
         logging.info(send_text)
-        send_line_notify(send_text)
+        send_line_masageapi(send_text)
 
-def send_line_notify(notification_message):
+def send_line_masageapi(notification_message: str) -> None:
     """
-    LINEに通知する
+    Notificate to LINE
     """
-    line_notify_token = parameter.Token_key
-    line_notify_api = 'https://notify-api.line.me/api/notify'
-    headers = {'Authorization': f'Bearer {line_notify_token}'}
-    data = {'message': f'message: {notification_message}'}
-    requests.post(line_notify_api, headers = headers, data = data)
+    line_token = parameter.LINE_CHANNEL_ACCESS_TOKEN
+    line_group_id = parameter.LINE_MESSAGE_API_GROUP_ID
+    line_api_url = 'https://api.line.me/v2/bot/message/push'
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {line_token}',
+    }
+    data = {
+        'to': line_group_id,
+        'messages': [
+            {
+                'type': 'text',
+                'text': notification_message,
+            },
+        ],
+    }
+    requests.post(line_api_url, headers=headers, data=json.dumps(data))
 
 def file_path(filename):
     # 別のディレクトリで実行した際に、実行ファイルのパスを指定する関数
